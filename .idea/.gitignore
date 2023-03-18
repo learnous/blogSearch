@@ -1,0 +1,16 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+# Editor-based HTTP Client requests
+/httpRequests/
+# Datasource local storage ignored files
+/dataSources/
+/dataSources.local.xml
+/build/*
+/.gradle/*
+/modules/blogSearch-api/blogSearch.blogSearch-api.main.iml
+/modules/blogSearch-domain/blogSearch.blogSearch-domain.main.iml
+/compiler.xml
+/jarRepositories.xml
+/misc.xml
+/modules.xml

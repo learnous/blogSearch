@@ -1,0 +1,4 @@
+rootProject.name = 'blogSearch'
+include 'blogSearch-api'
+include 'blogSearch-domain'
+
