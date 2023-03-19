@@ -1,13 +1,12 @@
 package com.blogSearch.api;
 
+import com.blogSearch.configuration.CommonConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Import;
 
 @SpringBootApplication
-@ComponentScan(basePackages = "com.blogSearch")
-@EntityScan(basePackages = "com.blogSearch")
+@Import(value = CommonConfig.class)
 public class BlogSearchApiApplication {
     public static void main(String[] args) {
         SpringApplication.run(BlogSearchApiApplication.class, args);

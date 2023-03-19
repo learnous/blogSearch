@@ -1,4 +1,4 @@
-package com.blogSearch.domain;
+package com.blogSearch.domain.keyword;
 
 import lombok.*;
 

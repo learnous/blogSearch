@@ -13,8 +13,8 @@ public class HelloController {
     public String getHello() {
         return "Hello World!";
     }
-    @GetMapping("/bizException")
-    public String getBizException() {
+    @GetMapping("/exception")
+    public String getException() {
         throw new CustomException("Hello Exception!!");
     }
 }
