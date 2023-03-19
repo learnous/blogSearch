@@ -35,7 +35,7 @@ public class KeywordController {
     }
 
     @PostMapping("/blog/search")
-    public BlogSearchResult getBlogSearchResult(@Valid @RequestBody BlogSearchRequestDto requestDto) {
+    public BlogSearchResult getBlogSearchResult(@RequestBody @Valid BlogSearchRequestDto requestDto) {
         return null;
     }
 
