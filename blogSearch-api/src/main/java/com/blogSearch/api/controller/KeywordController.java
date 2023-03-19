@@ -19,9 +19,4 @@ public class KeywordController {
         return keywordCombineService.listKeyword();
     }
 
-    @GetMapping("/mock/keyword/insert")
-    public void insertKeyword() {
-        keywordCombineService.addKeywordMock();
-    }
-
 }

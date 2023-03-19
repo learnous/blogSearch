@@ -13,8 +13,4 @@ public class KeywordCombineService {
     public List<Keyword> listKeyword() {
         return keywordService.listKeyword();
     }
-
-    public void addKeywordMock() {
-        keywordService.addKeywordMock();
-    }
 }

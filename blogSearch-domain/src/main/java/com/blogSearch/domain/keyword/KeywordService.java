@@ -19,11 +19,4 @@ public class KeywordService {
         return keywordRepository.findAll();
     }
 
-    public void addKeywordMock() {
-        keywordRepository.save(Keyword.builder()
-                .keyword("mock")
-                .keywordCount(0L)
-                .build());
-    }
-
 }
