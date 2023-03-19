@@ -2,7 +2,6 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '2.7.9'
 }
-
 apply plugin: 'io.spring.dependency-management'
 
 group 'org.example'
@@ -35,4 +34,11 @@ ext {
 
 test {
     useJUnitPlatform()
+}
+
+bootJar {
+    enabled = false
+}
+jar {
+    enabled = true
 }
