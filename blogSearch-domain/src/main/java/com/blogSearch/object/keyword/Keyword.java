@@ -1,4 +1,4 @@
-package com.blogSearch.domain.keyword;
+package com.blogSearch.object.keyword;
 
 import lombok.*;
 
@@ -25,12 +25,12 @@ public class Keyword {
     @Column(name = "keyword", unique = true)
     private String keyword;
 
-    @Column(name = "keyword_count")
+    @Column(name = "keyword_count", columnDefinition = "bigint default 0")
     private Long keywordCount;
 
-    @Column(name = "created_at")
+    @Column(name = "created_at", columnDefinition = "timestamp default now()")
     private Date createdAt;
 
-    @Column(name = "updated_at")
+    @Column(name = "updated_at", columnDefinition = "timestamp default now()")
     private Date updatedAt;
 }
