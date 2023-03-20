@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -15,8 +16,12 @@ public class KeywordService {
         return keywordRepository.findTop10ByOrderByKeywordCountDesc();
     }
 
-    public List<Keyword> listKeyword() {
-        return keywordRepository.findAll();
+    public Optional<Keyword> findKeywordByKeyword(String keyword) {
+        return keywordRepository.findFirstByKeyword(keyword);
+    }
+
+    public Keyword putKeyword(Keyword keyword) {
+        return keywordRepository.save(keyword);
     }
 
 }

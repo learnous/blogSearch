@@ -1,17 +1,18 @@
 package com.blogSearch.object.blogSearch;
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 import java.util.Date;
 
 @Data
 @Builder
-public class BlogSearchResultDocuments {
+@AllArgsConstructor
+@NoArgsConstructor
+public class BlogSearchResultDocument {
     private String title;
     private String contents;
     private String url;
-    private String blogName;
+    private String blogname;
     private String thumbnail;
     private Date datetime;
 

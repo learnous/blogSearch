@@ -14,6 +14,7 @@ public class BlogSearchErrorResponse {
 
     public static BlogSearchErrorResponse from(String message, Object data) {
         return BlogSearchErrorResponse.builder()
+                .code("FAIL")
                 .message(message)
                 .data(data)
                 .build();

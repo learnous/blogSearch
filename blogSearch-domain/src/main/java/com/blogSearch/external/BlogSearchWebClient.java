@@ -42,6 +42,7 @@ public class BlogSearchWebClient {
     }
 
     public WebClient.ResponseSpec get(String uri, MultiValueMap<String, String> headers) {
+        log.warn(headers.toString());
         return webClient.get()
                 .uri(uri)
                 .headers(httpHeaders -> httpHeaders.addAll(headers))
