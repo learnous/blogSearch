@@ -4,10 +4,12 @@ import com.blogSearch.external.ApiType;
 import com.blogSearch.external.BlogSearchWebClient;
 import com.blogSearch.object.blogSearch.BlogSearchRequestDto;
 import com.blogSearch.object.blogSearch.BlogSearchResult;
+import com.blogSearch.object.blogSearch.external.NCompanyResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.web.util.UriComponentsBuilder;
+import reactor.core.publisher.Mono;
 
 import javax.annotation.PostConstruct;
 import java.util.Optional;
@@ -34,21 +36,36 @@ public class NaverBlogSearchWrapper implements BlogSearchWrapper {
         return API_TYPE.equals(apiType);
     }
 
+    @Override
     public BlogSearchResult getBlogSearchResult(BlogSearchRequestDto requestDto) {
 
+        return getBlogSearchResultMono(requestDto).block();
+    }
+
+    @Override
+    public Mono<BlogSearchResult> getBlogSearchResultMono(BlogSearchRequestDto requestDto) {
+
         return webClient.get(getBlogSearchFullUri(requestDto), DEFAULT_HEADER)
-                .bodyToMono(BlogSearchResult.class)
-                .block();
+                .bodyToMono(NCompanyResponseDto.class)
+                .map(NCompanyResponseDto::to)
+                .onErrorResume(e -> {
+                    e.printStackTrace();
+                    return Mono.error(new Throwable("API 응답이 올바르지 않습니다"));
+                });
     }
 
     private String getBlogSearchFullUri(BlogSearchRequestDto requestDto) {
+        String sort = "recency".equalsIgnoreCase(requestDto.getSort()) ? "date" : "sim";
+        Integer page = Optional.ofNullable(requestDto.getPage()).orElse(1);
+        Integer size = Optional.ofNullable(requestDto.getSize()).orElse(10);
+
         return UriComponentsBuilder
                 .fromUriString(BASE_URI)
                 .path(ENDPOINT)
                 .queryParam("query", requestDto.getKeyword())
-                .queryParamIfPresent("sort", Optional.ofNullable(requestDto.getSort()))
-                .queryParamIfPresent("start", Optional.ofNullable(requestDto.getPage()))
-                .queryParamIfPresent("display", Optional.ofNullable(requestDto.getSize()))
+                .queryParam("sort", sort)
+                .queryParam("start", Math.min((page - 1) * size + 1, 1000))
+                .queryParam("display", size)
                 .build()
                 .toString();
     }

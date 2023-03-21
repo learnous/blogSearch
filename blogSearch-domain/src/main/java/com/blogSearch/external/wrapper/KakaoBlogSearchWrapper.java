@@ -5,14 +5,17 @@ import com.blogSearch.external.BlogSearchWebClient;
 import com.blogSearch.object.blogSearch.BlogSearchRequestDto;
 import com.blogSearch.object.blogSearch.BlogSearchResult;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.web.util.UriComponentsBuilder;
+import reactor.core.publisher.Mono;
 
 import javax.annotation.PostConstruct;
 import java.util.Optional;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class KakaoBlogSearchWrapper implements BlogSearchWrapper {
@@ -35,11 +38,19 @@ public class KakaoBlogSearchWrapper implements BlogSearchWrapper {
         return API_TYPE.equals(apiType);
     }
 
+    @Override
     public BlogSearchResult getBlogSearchResult(BlogSearchRequestDto requestDto) {
+        return getBlogSearchResultMono(requestDto).block();
+    }
+    @Override
+    public Mono<BlogSearchResult> getBlogSearchResultMono(BlogSearchRequestDto requestDto) {
         return webClient.get(getBlogSearchFullUri(requestDto), DEFAULT_HEADER)
                 .bodyToMono(BlogSearchResult.class)
-                .onErrorReturn(fallBackWrapper.getBlogSearchResult(requestDto))
-                .block();
+                .onErrorResume((e) -> {
+                    log.warn("KAKAO API에서 에러가 발생해서 Naver API를 호출합니다: " + requestDto);
+                    e.printStackTrace();
+                    return fallBackWrapper.getBlogSearchResultMono(requestDto);
+                });
     }
 
     private String getBlogSearchFullUri(BlogSearchRequestDto requestDto) {
