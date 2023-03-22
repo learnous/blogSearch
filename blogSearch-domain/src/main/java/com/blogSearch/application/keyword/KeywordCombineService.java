@@ -40,11 +40,12 @@ public class KeywordCombineService {
         keyword.setKeywordCount(keyword.getKeywordCount() + 1);
         keywordService.putKeyword(keyword);
 
-        return blogSearchWrapper
+        BlogSearchWrapper searchWrapper = blogSearchWrapper
                 .stream()
                 .filter(it -> it.isSupport(ApiType.KAKAO))
                 .findFirst()
-                .orElseThrow(new CustomException("구현되지 않은 API입니다"))
-                .getBlogSearchResult(requestDto);
+                .orElseThrow(new CustomException("구현되지 않은 API입니다"));
+
+        return searchWrapper.getBlogSearchResult(requestDto);
     }
 }
