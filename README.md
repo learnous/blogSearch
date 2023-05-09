@@ -1,4 +1,4 @@
-# 카카오뱅크 과제
+# 과제
 ### 소스코드
  - [링크](https://github.com/learnous/blogSearch)
 
